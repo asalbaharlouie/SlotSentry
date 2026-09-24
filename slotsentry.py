@@ -11,7 +11,7 @@ required_fields = ["title", "check_interval_minutes", "contact_email"]
 
 @app.post("/watches")
 def new_request():
-    data = request.get_json()
+    data = request.get_json(silent=True)
 
     if not data:
         return jsonify({"response": "Invalid JSON"}), 400
@@ -62,14 +62,20 @@ def read_all_requests():
 @app.patch("/watches/<int:watch_id>")
 def update_request(watch_id):
 
-    data = request.get_json()
+    data = request.get_json(silent=True)
+
+    if not data:
+            return jsonify({"response": "Invalid JSON"}), 400
 
     if watch_id not in state["watches"]:
         return jsonify({"response": "Watch does not exist"}), 404
-
+    
     watch = state["watches"][watch_id]
 
-    watch.update(data)
+    allowed_fields = ["title", "check_interval_minutes", "contact_email", "status"]
+    for key in allowed_fields:
+        if key in data:
+            watch[key] = data[key]
 
     return jsonify(watch),200
 
