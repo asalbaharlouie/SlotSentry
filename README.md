@@ -37,7 +37,7 @@ Creates a new watch request.
 {
   "title": "نوبت سفارت آلمان",
   "check_interval_minutes": 15,
-  "contact_email": "navid@example.com"
+  "contact_email": "test@example.com"
 }
 ```
 
@@ -51,7 +51,7 @@ Creates a new watch request.
   "status": "active",
   "title": "نوبت سفارت آلمان",
   "check_interval_minutes": 15,
-  "contact_email": "navid@example.com"
+  "contact_email": "test@example.com"
 }
 ```
 
@@ -87,7 +87,7 @@ Returns a specific watch by its ID.
   "status": "active",
   "title": "نوبت سفارت آلمان",
   "check_interval_minutes": 15,
-  "contact_email": "navid@example.com"
+  "contact_email": "test@example.com"
 }
 ```
 
@@ -120,7 +120,7 @@ Returns all watch requests.
     "status": "active",
     "title": "نوبت سفارت آلمان",
     "check_interval_minutes": 15,
-    "contact_email": "navid@example.com"
+    "contact_email": "test@example.com"
   },
   {
     "id": 2,
