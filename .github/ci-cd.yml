@@ -1,0 +1,51 @@
+name: SlotSentry CI/CD
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+
+      - name: Install uv 
+        uses: astral-sh/setup-uv@v7
+
+      - name: Install dependencies 
+        run: uv sync --locked
+
+      - name: Run tests 
+        run: uv run pytest
+
+  docker:
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build Docker image
+        run: docker build -t asalbaharlouie/slotsentry:latest .
+
+      - name: Push Docker image
+        run: docker push asalbaharlouie/slotsentry:latest
